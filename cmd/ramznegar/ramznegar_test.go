@@ -11,6 +11,7 @@ import (
 	"os"
 	"otp/internal/ramznegar"
 	"otp/internal/structs"
+	"strings"
 	"testing"
 )
 
@@ -49,6 +50,7 @@ func TestRamznegar(t *testing.T) {
 
 		reader := bufio.NewReader(os.Stdin)
 		captchaCode, _ := reader.ReadString('\n')
+		captchaCode = strings.TrimSpace(captchaCode)
 
 		apiKey, newAccount, err = r.VerifyDeviceWithCaptcha(verificationCode, captchaCode)
 		if err != nil {

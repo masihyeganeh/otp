@@ -5,7 +5,6 @@ import (
 	"crypto/rand"
 	"crypto/sha1"
 	"encoding/base64"
-	"github.com/fd/eccp"
 	"math/big"
 	. "otp/internal/structs"
 )
@@ -26,12 +25,8 @@ func newEccKey() (*eccKey, error) {
 	return &eccKey{curve, private, x, y}, nil
 }
 
-func (e *eccKey) compressedPublicKey() []byte {
-	return eccp.Marshal(e.curve, e.x, e.y)
-}
-
 func (e *eccKey) sharedKey(serverPublicKey []byte) []byte {
-	serverX, serverY := eccp.Unmarshal(e.curve, serverPublicKey)
+	serverX, serverY := elliptic.UnmarshalCompressed(e.curve, serverPublicKey)
 	x, _ := e.curve.ScalarMult(serverX, serverY, e.private)
 
 	xBytes := x.Bytes()
@@ -56,7 +51,7 @@ func GenerateKeys(serverPoint string) (*EncryptionData, error) {
 	}
 
 	return &EncryptionData{
-		PublicKey: base64.StdEncoding.EncodeToString(ecc.compressedPublicKey()),
+		PublicKey: base64.StdEncoding.EncodeToString(elliptic.MarshalCompressed(ecc.curve, ecc.x, ecc.y)),
 		SharedKey: ecc.sharedKey(serverPublicKey),
 	}, nil
 }

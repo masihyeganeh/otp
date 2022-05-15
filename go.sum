@@ -4,10 +4,6 @@ github.com/disintegration/imaging v1.6.2 h1:w1LecBlG2Lnp8B3jk5zSuNqd7b4DXhcjwek1
 github.com/disintegration/imaging v1.6.2/go.mod h1:44/5580QXChDfwIclfc/PCwrr44amcmDAg8hxG0Ewe4=
 github.com/eliukblau/pixterm v1.3.1 h1:XeouQViH+lmzCa7sMUoK2cd7qlgHYGLIjwRKaOdJbKA=
 github.com/eliukblau/pixterm v1.3.1/go.mod h1:on5ueknFt+ZFVvIVVzQ7/JXwPjv5fJd8Q1Ybh7XixfU=
-github.com/fd/eccp v1.0.0 h1:0ccaqCIbqaqRGKB0a0M8UC8dvmWAjZbclwjzDU7rOEE=
-github.com/fd/eccp v1.0.0/go.mod h1:PfKIi1NvaMsolafRw7s75ICSKRXmPLOlOucpN1UN/W8=
-github.com/fd/secp160r1 v1.0.0 h1:WJEJHLYR8CxISG+2XdPgTD/5NKcIekWpAsO44zLKk4Q=
-github.com/fd/secp160r1 v1.0.0/go.mod h1:mlgy4dKDLkzLQQOymKm3D+tnYZs6jyhkAzvtCF/S6aQ=
 github.com/google/uuid v1.1.1 h1:Gkbcsh/GbpXz7lPftLA3P6TYMwjCLYm83jiFQZF/3gY=
 github.com/google/uuid v1.1.1/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/lucasb-eyer/go-colorful v1.0.3 h1:QIbQXiugsb+q10B+MI+7DI1oQLdmnep86tWFlaaUAac=

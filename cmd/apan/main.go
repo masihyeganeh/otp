@@ -6,6 +6,7 @@ import (
 	"log"
 	"os"
 	"otp/internal/apan"
+	"strings"
 )
 
 /*
@@ -33,6 +34,7 @@ func main() {
 
 	reader := bufio.NewReader(os.Stdin)
 	code, _ := reader.ReadString('\n')
+	code = strings.TrimSpace(code)
 
 	err = api.LoginWithCode(code)
 	if err != nil {
@@ -47,32 +49,32 @@ func main() {
 	}
 
 	fmt.Println(otpToken)
-	//otpToken := &token.Token{
+	// otpToken := &token.Token{
 	//	OtpLength:  8,
 	//	SecretKey:       "",
 	//	TimeInterval:    60000,
 	//	//Seed:            "D2C3E15B8F90E747228BD733A885F6DCEB150968",
-	//}
+	// }
 	//
-	//const generateOtp1 = false
-	//const generateOtp2 = true
+	// const generateOtp1 = false
+	// const generateOtp2 = true
 	//
-	//var err error
+	// var err error
 	//
-	//if len(otpToken.Seed) == 0 {
+	// if len(otpToken.Seed) == 0 {
 	//	otpToken, err = sina.Activate("5fc33039-0ad1-4920-875d-6fc2a9840ce8", "8836", "150968", "3922880", "MODERN", 1590962082262)
 	//	if err != nil {
 	//		log.Fatal(err)
 	//	}
-	//}
+	// }
 	//
-	//url, err := otpToken.GeneralOtp1UrlWithUsername("en bank", "6177236")
-	//if err != nil {
+	// url, err := otpToken.GeneralOtp1UrlWithUsername("en bank", "6177236")
+	// if err != nil {
 	//	log.Fatal(err)
-	//}
-	//fmt.Printf("General OTP url : %s\n", url)
+	// }
+	// fmt.Printf("General OTP url : %s\n", url)
 	//
-	//if generateOtp1 {
+	// if generateOtp1 {
 	//	otp, err := otpToken.GenerateOtp1()
 	//	if err != nil {
 	//		otp = err.Error()
@@ -83,9 +85,9 @@ func main() {
 	//	//if err != nil {
 	//	//	log.Fatal(err)
 	//	//}
-	//}
+	// }
 	//
-	//if generateOtp2 {
+	// if generateOtp2 {
 	//	otp, err := otpToken.GenerateOtp2()
 	//	if err != nil {
 	//		otp = err.Error()
@@ -96,7 +98,7 @@ func main() {
 	//	//if err != nil {
 	//	//	log.Fatal(err)
 	//	//}
-	//}
+	// }
 	//
-	//fmt.Printf("Save token for next time : %+v\n", *otpToken)
+	// fmt.Printf("Save token for next time : %+v\n", *otpToken)
 }

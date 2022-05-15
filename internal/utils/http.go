@@ -10,6 +10,7 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/http/cookiejar"
 )
 
 var client *http.Client
@@ -23,6 +24,11 @@ func init() {
 		rootCAs = x509.NewCertPool()
 	}
 
+	jar, err := cookiejar.New(nil)
+	if err != nil {
+		panic(err.Error())
+	}
+
 	client = &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
@@ -30,6 +36,7 @@ func init() {
 				RootCAs:            rootCAs,
 			},
 		},
+		Jar: jar,
 	}
 }
 
@@ -72,7 +79,6 @@ func Request(uri string, headers map[string]string, postBody []byte, result inte
 		}
 	}
 	res, err := client.Do(req)
-	//res, err := client.Post(uri, "application/json", bytes.NewReader(postBody))
 	if err != nil {
 		return nil, err
 	}
