@@ -199,7 +199,7 @@ func (e *EghtesadNovin) Activate(token, verificationCode, cif string, otpType Ot
 		return nil, err
 	}
 
-	responseToken.Seed = string(secret) // TODO: TBH, I'm not sure about this line. maybe we need to concat verificationCode to it
+	responseToken.Seed = string(secret)
 	return responseToken, nil
 }
 
@@ -224,7 +224,7 @@ func (e *EghtesadNovin) activateToken(cif string, otpType OtpType, publicKey str
 		SecondOtpLength: resp.OtpLength,
 		OtpLength:       resp.OtpLength,
 		SecretKey:       resp.SecretKey,
-		TimeInterval:    resp.OtpGenerationPeriod / 1000, // In the app, it generates otp every 2 minutes
+		TimeInterval:    resp.OtpGenerationPeriod,
 		BankName:        "Eghtesad Novin",
 		AccountId:       cif,
 	}, nil

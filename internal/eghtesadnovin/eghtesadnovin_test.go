@@ -5,9 +5,34 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"otp/internal/token"
 	"strings"
 	"testing"
 )
+
+func TestTokenGeneration(t *testing.T) {
+	// 778024 is shown at 1652703737 for 9D5D96988C8D267DD4FD4B5AF7EFB394A493B85A in the app
+
+	otpToken := token.Token{
+		FirstOtpLength:  6,
+		SecondOtpLength: 6,
+		OtpLength:       6,
+		Seed:            "9D5D96988C8D267DD4FD4B5AF7EFB394A493B85A",
+		TimeInterval:    60000,
+		BankName:        "Eghtesad Novin",
+	}
+
+	timestamp := int64(1652703737)
+
+	otp, err := otpToken.GenerateOtp1WithTimestamp(timestamp)
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	if otp != "778024" {
+		t.Fatal("implementation is wrong")
+	}
+}
 
 func TestLogin(t *testing.T) {
 	enBank := New("7831C1D6BABA0000")
@@ -44,22 +69,27 @@ func TestLogin(t *testing.T) {
 	verificationCode, _ := reader.ReadString('\n')
 	verificationCode = strings.TrimSpace(verificationCode)
 
-	token, err := enBank.Activate(config.Token, verificationCode, config.Cif, otpType)
+	otpToken, err := enBank.Activate(config.Token, verificationCode, config.Cif, otpType)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	fmt.Println(token)
+	fmt.Println(otpToken)
 
 	err = enBank.Logout()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	otp, err := token.GenerateOtp1()
+	otpUrl, err := otpToken.GeneralOtp1UrlFromToken()
+	if err != nil {
+		t.Fatal(err.Error())
+	}
+
+	otp, err := otpToken.GenerateOtp1()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
-	fmt.Println(otp)
+	t.Logf("OTP URL:\n%s\n\nOTP Now: %s", otpUrl, otp)
 }

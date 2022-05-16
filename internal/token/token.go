@@ -25,21 +25,29 @@ type Token struct {
 }
 
 func (t *Token) GenerateOtp1() (string, error) {
-	return t.generateOtp(t.Seed, t.TimeInterval/1000, t.FirstOtpLength, sha1.New)
+	return t.generateOtp(t.Seed, t.TimeInterval/1000, t.FirstOtpLength, sha1.New, time.Now().Unix())
 }
 
 func (t *Token) GenerateOtp2() (string, error) {
-	return t.generateOtp(t.Seed, t.TimeInterval/1000, t.SecondOtpLength, sha1.New)
+	return t.generateOtp(t.Seed, t.TimeInterval/1000, t.SecondOtpLength, sha1.New, time.Now().Unix())
 }
 
-func (t *Token) generateOtp(seed string, interval int, otpLength int, hashFunction func() hash.Hash) (string, error) {
+func (t *Token) GenerateOtp1WithTimestamp(timestamp int64) (string, error) {
+	return t.generateOtp(t.Seed, t.TimeInterval/1000, t.FirstOtpLength, sha1.New, timestamp)
+}
+
+func (t *Token) GenerateOtp2WithTimestamp(timestamp int64) (string, error) {
+	return t.generateOtp(t.Seed, t.TimeInterval/1000, t.SecondOtpLength, sha1.New, timestamp)
+}
+
+func (t *Token) generateOtp(seed string, interval int, otpLength int, hashFunction func() hash.Hash, timestamp int64) (string, error) {
 	key, err := hex.DecodeString(seed)
 	if err != nil {
 		return "", err
 	}
 
 	now := make([]byte, 8)
-	binary.BigEndian.PutUint64(now, uint64(time.Now().Unix()/int64(interval)))
+	binary.BigEndian.PutUint64(now, uint64(timestamp/int64(interval)))
 
 	h := hmac.New(hashFunction, key)
 	h.Write(now)
